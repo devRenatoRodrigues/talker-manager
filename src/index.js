@@ -1,5 +1,7 @@
 const express = require('express');
 const talkManager = require('./talkManager');
+const tokenGenerate = require('./middleware/tokenGenerate');
+const validateLogin = require('./middleware/validateLogin');
 
 const app = express();
 app.use(express.json());
@@ -28,4 +30,9 @@ app.get('/talker/:id', async (req, res) => {
   const talker = await talkManager.getTalkerById(Number(id));
   if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' }); 
   return res.status(200).json(talker);
+});
+
+app.post('/login', validateLogin, (req, res) => {
+  const tokenNumber = tokenGenerate();
+  return res.status(200).json({ token: tokenNumber });
 });
