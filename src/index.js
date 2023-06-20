@@ -50,9 +50,10 @@ app.post(
   validateTalkKeys,
   async (req, res) => {
     const { body } = req;
-    const token = tokenGenerate();
+    // const token = tokenGenerate();
     console.log(body);
     const addTalker = await talkManager.postNewTalker(body);
-    return res.status(201).header('authorization', token).json(addTalker);
+    return res.status(201).json(addTalker);
   },
+  
 );
