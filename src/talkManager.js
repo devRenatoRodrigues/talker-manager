@@ -35,8 +35,22 @@ await writeTalkManagerFile(getTalkers);
 return talker;
 };
 
+const editTalker = async (id, body) => {
+    const talkers = await readTalkManagerFile();
+   const findTalker = talkers.find((talker) => Number(talker.id) === Number(id));
+   if (!findTalker) {
+    throw new Error('Pessoa palestrante não encontrada');
+   }
+    const index = talkers.indexOf(findTalker);
+    const updated = { id: Number(id), ...body };
+    talkers.splice(index, 1, updated);
+    await writeTalkManagerFile(talkers);
+    return updated;
+};
+
 module.exports = {
     getAllTalkers,
     getTalkerById,
     postNewTalker,
+    editTalker,
 };

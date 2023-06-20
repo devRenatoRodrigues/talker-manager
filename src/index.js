@@ -50,10 +50,28 @@ app.post(
   validateTalkKeys,
   async (req, res) => {
     const { body } = req;
-    // const token = tokenGenerate();
-    console.log(body);
     const addTalker = await talkManager.postNewTalker(body);
     return res.status(201).json(addTalker);
+  },
+  
+);
+
+app.put(
+  '/talker/:id',
+  auth,
+  validateName,
+  validateAge,
+  validateTalk,
+  validateTalkKeys,
+  async (req, res) => {
+    const { body } = req;
+    const { id } = req.params;
+    try {
+    const updatedTalker = await talkManager.editTalker(id, body);
+    return res.status(200).json(updatedTalker);
+    } catch (error) {
+      return res.status(404).json({ message: error.message });
+    }
   },
   
 );
