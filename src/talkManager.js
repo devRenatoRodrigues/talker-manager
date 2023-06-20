@@ -56,14 +56,7 @@ const deleteTalker = async (id) => {
     await writeTalkManagerFile(talkers);
 };
 
-const searchByName = async (term) => {
-    const talkers = await readTalkManagerFile();
-    const searchResult = talkers
-    .filter((talker) => talker.name.toLowerCase().includes(term.toLowerCase()));
-    return searchResult;
-};
-
-const searchByNameAndRate = async (term, rate) => {
+const searchByNameAndRate = async (term, rate, date) => {
     const talkers = await readTalkManagerFile();
 let searchResult = talkers;
 
@@ -75,6 +68,10 @@ if (term) {
         const rateNumber = Number(rate, 10);
         searchResult = searchResult.filter(({ talk }) => talk.rate === rateNumber);
     }
+
+    if (date) {
+        searchResult = searchResult.filter(({ talk }) => talk.watchedAt === date);
+      }
     return searchResult;
 };
 
@@ -84,6 +81,5 @@ module.exports = {
     postNewTalker,
     editTalker,
     deleteTalker,
-    searchByName,
     searchByNameAndRate,
 };
