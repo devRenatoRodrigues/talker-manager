@@ -23,6 +23,15 @@ app.listen(PORT, () => {
 });
 
 //--------------------------------------------------------------------------
+app.get(
+  '/talker/search',
+ auth,
+  async (req, res) => {
+  const term = req.query.q;
+  const searchTerm = await talkManager.searchByName(term);
+  return res.status(200).json(searchTerm);
+},
+);
 
 app.get('/talker', async (req, res) => {
   const talkers = await talkManager.getAllTalkers();

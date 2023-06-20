@@ -56,10 +56,22 @@ const deleteTalker = async (id) => {
     await writeTalkManagerFile(talkers);
 };
 
+const searchByName = async (term) => {
+    const talkers = await readTalkManagerFile();
+    // if (!term) {
+    //     return getAllTalkers();
+    // }
+    const searchResult = talkers
+    .filter((talker) => talker.name.toLowerCase().includes(term.toLowerCase()));
+    console.log(searchResult);
+    return searchResult;
+};
+
 module.exports = {
     getAllTalkers,
     getTalkerById,
     postNewTalker,
     editTalker,
     deleteTalker,
+    searchByName,
 };
