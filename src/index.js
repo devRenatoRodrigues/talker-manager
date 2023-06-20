@@ -75,3 +75,14 @@ app.put(
   },
   
 );
+
+app.delete(
+  '/talker/:id',
+  auth,
+  async (req, res) => {
+    const { id } = req.params;
+    const deleteTalker = await talkManager.deleteTalker(id);
+    return res.status(204).json(deleteTalker);
+  },
+  
+);

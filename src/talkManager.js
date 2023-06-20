@@ -48,9 +48,18 @@ const editTalker = async (id, body) => {
     return updated;
 };
 
+const deleteTalker = async (id) => {
+    const talkers = await readTalkManagerFile();
+   const findTalker = talkers.find((talker) => Number(talker.id) === Number(id));
+    const index = talkers.indexOf(findTalker);
+    talkers.splice(index, 1);
+    await writeTalkManagerFile(talkers);
+};
+
 module.exports = {
     getAllTalkers,
     getTalkerById,
     postNewTalker,
     editTalker,
+    deleteTalker,
 };
