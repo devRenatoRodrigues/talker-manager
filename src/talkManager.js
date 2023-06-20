@@ -11,6 +11,11 @@ const readTalkManagerFile = async () => {
     }
 };
 
+const writeTalkManagerFile = async (talkers) => {
+      const data = JSON.stringify(talkers, null, 2);
+      await fs.writeFile('src/talker.json', data, 'utf-8');
+  };
+
 const getAllTalkers = async () => {
     const talkers = await readTalkManagerFile();
     return talkers;
@@ -21,7 +26,17 @@ const getTalkerById = async (id) => {
     return talkers.find((talker) => talker.id === id);
 };
 
+const postNewTalker = async (body) => {
+    const getTalkers = await readTalkManagerFile();
+const nextId = getTalkers.length + 1;
+const talker = { id: nextId, ...body };
+getTalkers.push(talker);
+await writeTalkManagerFile(getTalkers);
+return talker;
+};
+
 module.exports = {
     getAllTalkers,
     getTalkerById,
+    postNewTalker,
 };

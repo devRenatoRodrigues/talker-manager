@@ -1,7 +1,7 @@
-const { randomBytes } = require('crypto');
+const crypto = require('crypto');
 
 function tokenGenerate() {
-  return randomBytes(8).toString('hex');
+  return crypto.randomBytes(8).toString('hex');
 }
 
 module.exports = tokenGenerate;
