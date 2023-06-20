@@ -58,12 +58,23 @@ const deleteTalker = async (id) => {
 
 const searchByName = async (term) => {
     const talkers = await readTalkManagerFile();
-    // if (!term) {
-    //     return getAllTalkers();
-    // }
     const searchResult = talkers
     .filter((talker) => talker.name.toLowerCase().includes(term.toLowerCase()));
-    console.log(searchResult);
+    return searchResult;
+};
+
+const searchByNameAndRate = async (term, rate) => {
+    const talkers = await readTalkManagerFile();
+let searchResult = talkers;
+
+if (term) {
+    searchResult = talkers
+.filter((talker) => talker.name.toLowerCase().includes(term.toLowerCase()));
+}
+    if (rate) {
+        const rateNumber = Number(rate, 10);
+        searchResult = searchResult.filter(({ talk }) => talk.rate === rateNumber);
+    }
     return searchResult;
 };
 
@@ -74,4 +85,5 @@ module.exports = {
     editTalker,
     deleteTalker,
     searchByName,
+    searchByNameAndRate,
 };

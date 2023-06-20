@@ -6,6 +6,7 @@ const validateLogin = require('./middleware/validateLogin');
 const validateName = require('./middleware/validateName');
 const validateAge = require('./middleware/validateAge');
 const { validateTalk, validateTalkKeys } = require('./middleware/validateTalk');
+const validateSearchRate = require('./middleware/validateSearchRate');
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,18 @@ app.listen(PORT, () => {
 app.get(
   '/talker/search',
  auth,
+ validateSearchRate,
+  async (req, res) => {
+  const term = req.query.q;
+  const { rate } = req.query;
+  const searchTermAndRate = await talkManager.searchByNameAndRate(term, rate);
+  return res.status(200).json(searchTermAndRate);
+},
+);
+
+app.get(
+  '/talker/search',
+ auth,
   async (req, res) => {
   const term = req.query.q;
   const searchTerm = await talkManager.searchByName(term);
@@ -33,7 +46,7 @@ app.get(
 },
 );
 
-app.get('/talker', async (req, res) => {
+app.get('/talker', async (__req, res) => {
   const talkers = await talkManager.getAllTalkers();
   return res.status(200).json(talkers);
 });
