@@ -8,6 +8,7 @@ const validateAge = require('./middleware/validateAge');
 const { validateTalk, validateTalkKeys } = require('./middleware/validateTalk');
 const validateSearchRate = require('./middleware/validateSearchRate');
 const validateSearchDate = require('./middleware/validateSearchDate');
+const { validateUpdateRate, validateUpdate } = require('./middleware/validateUpdateRate');
 
 const app = express();
 app.use(express.json());
@@ -33,7 +34,7 @@ app.get(
   async (req, res) => {
   const term = req.query.q;
   const { rate, date } = req.query;
-  const searchTermAndRate = await talkManager.searchByNameAndRate(term, rate, date);
+  const searchTermAndRate = await talkManager.getSearch(term, rate, date);
   return res.status(200).json(searchTermAndRate);
 },
 );
@@ -97,6 +98,20 @@ app.delete(
     const { id } = req.params;
     const deleteTalker = await talkManager.deleteTalker(id);
     return res.status(204).json(deleteTalker);
+  },
+  
+);
+
+app.patch(
+  '/talker/rate/:id',
+  auth,
+  validateUpdate,
+  validateUpdateRate,
+  async (req, res) => {
+    const { rate } = req.body;
+    const { id } = req.params;
+    const updateRate = await talkManager.updateRate(id, rate);
+    return res.status(204).json(updateRate);
   },
   
 );

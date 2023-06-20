@@ -56,7 +56,7 @@ const deleteTalker = async (id) => {
     await writeTalkManagerFile(talkers);
 };
 
-const searchByNameAndRate = async (term, rate, date) => {
+const getSearch = async (term, rate, date) => {
     const talkers = await readTalkManagerFile();
 let searchResult = talkers;
 
@@ -75,11 +75,20 @@ if (term) {
     return searchResult;
 };
 
+const updateRate = async (id, rate) => {
+    const talkers = await readTalkManagerFile();
+    const findTalker = talkers.find((talker) => Number(talker.id) === Number(id));
+    findTalker.talk.rate = rate;
+    await writeTalkManagerFile(talkers);
+    return findTalker;
+};
+
 module.exports = {
     getAllTalkers,
     getTalkerById,
     postNewTalker,
     editTalker,
     deleteTalker,
-    searchByNameAndRate,
+    getSearch,
+    updateRate,
 };
