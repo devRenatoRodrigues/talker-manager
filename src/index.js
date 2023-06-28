@@ -18,8 +18,8 @@ app.listen(PORT, async () => {
   console.log('Online');
 });
 
-app.use(login);
-app.use(getTalkers);
-app.use(updateTalkers);
+app.use('/login', login);
+app.use('/talker', getTalkers);
+app.use('/talker', updateTalkers);
 
 //--------------------------------------------------------------------------

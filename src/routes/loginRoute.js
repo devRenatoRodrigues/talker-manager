@@ -4,7 +4,7 @@ const validateLogin = require('../middleware/validateLogin');
 
 const login = express.Router();
 
-login.post('/login', validateLogin, (__req, res) => {
+login.post('/', validateLogin, (__req, res) => {
     const tokenNumber = tokenGenerate();
     return res.status(200).json({ token: tokenNumber });
   });

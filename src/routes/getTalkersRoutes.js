@@ -13,7 +13,7 @@ getTalkers.get('/talker/db', async (__req, res) => {
 });
 
 getTalkers.get(
-  '/talker/search',
+  '/search',
  auth,
  validateSearchDate,
  validateSearchRate,
@@ -25,12 +25,12 @@ getTalkers.get(
 },
 );
 
-getTalkers.get('/talker', async (__req, res) => {
+getTalkers.get('/', async (__req, res) => {
     const talkers = await talkManager.getAllTalkers();
     return res.status(200).json(talkers);
   });
   
-  getTalkers.get('/talker/:id', async (req, res) => {
+  getTalkers.get('/:id', async (req, res) => {
     const { id } = req.params;
     const talker = await talkManager.getTalkerById(Number(id));
     if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });

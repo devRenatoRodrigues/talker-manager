@@ -9,7 +9,7 @@ const { validateUpdate, validateUpdateRate } = require('../middleware/validateUp
 const updateTalkers = express.Router();
 
 updateTalkers.post(
-    '/talker',
+    '/',
     auth,
     validateName,
     validateAge,
@@ -24,7 +24,7 @@ updateTalkers.post(
   );
   
   updateTalkers.put(
-    '/talker/:id',
+    '/:id',
     auth,
     validateName,
     validateAge,
@@ -44,7 +44,7 @@ updateTalkers.post(
   );
   
   updateTalkers.delete(
-    '/talker/:id',
+    '/:id',
     auth,
     async (req, res) => {
       const { id } = req.params;
@@ -55,7 +55,7 @@ updateTalkers.post(
   );
   
   updateTalkers.patch(
-    '/talker/rate/:id',
+    '/:id',
     auth,
     validateUpdate,
     validateUpdateRate,
